@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "455263632627",
+    "firebase_url": "https://file-dog-default-rtdb.firebaseio.com",
+    "project_id": "file-dog",
+    "storage_bucket": "file-dog.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:455263632627:android:4051fb79487dcfc00ecb86",
+        "android_client_info": {
+          "package_name": "com.skylineman.filedog"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "455263632627-cs0pcne11fapqr2if4bnd8ha6dksgsoa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.skylineman.filedog",
+            "certificate_hash": "474fcb324909e439fb5b4438be5bae8fc7db8800"
+          }
+        },
+        {
+          "client_id": "455263632627-1f79n8neuioe0k5rugk995ldastl6q0f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjoV2e_IscUgKRZiZIlNnF4WG-35m10YI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "455263632627-1f79n8neuioe0k5rugk995ldastl6q0f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
