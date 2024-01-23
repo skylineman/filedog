@@ -1,0 +1,1 @@
+ /Users/gavanwang/fluttercode/filedog/.dart_tool/flutter_build/7624bbf3320963d857f3c6b1f8ce9a02/native_assets.yaml: 

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+
+<body>
+    <div id="output" class="well"></div>
+
+    <script type="text/javascript" src="./jsandcss/jquery-3.6.0.min.js"></script>
+	 <!-- 引入本地的jquery库 -->
+    <script type="text/javascript" src="./jsandcss/mammoth.browser.min.js"></script>
+	<!-- 引入mammoth库 -->
+    <script type="text/javascript">
+
+        function displayResult(result) {
+
+            var newHTML = result.value.replace('<h1>', '<h1 style="text-align: center;">')
+            .replace(/<table>/g, '<table style="border-collapse: collapse;">')
+            .replace(/<tr>/g, '<tr style="height: 30px;">')
+            .replace(/<td>/g, '<td style="border: 1px solid pink;">')
+            .replace(/<p>/g, '<p style="text-indent: 2em;">');
+            document.getElementById("output").innerHTML = newHTML;
+        }
+
+        function fromFlutter( fileData ) {
+
+            var arrayBuffer = new Uint8Array( fileData );
+
+            mammoth.convertToHtml({ arrayBuffer: arrayBuffer })
+                .then(displayResult);
+
+        }
+    </script>
+</body>
+</html>

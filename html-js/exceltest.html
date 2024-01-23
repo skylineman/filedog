@@ -1,0 +1,140 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title></title>
+    <style>
+        select {
+          width: 100%;
+          padding: 16px 20px;
+          border: none;
+          border-radius: 4px;
+          background-color: #f1f1f1;
+        }
+    </style>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="./jsandcss/bootstrap.min.css">
+
+    <script type="text/javascript" src="./jsandcss/xlsx.full.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div>
+            <p>请选择表单</p>
+            <select id="sheet_select" name="sheet_select">
+            </select>
+        </div>
+        <div id="excel_data" class="mt-5"></div>
+    </div>
+</body>
+</html>
+
+<script>
+
+var data;
+var work_book;
+var sheet_name;
+
+sheet_select.addEventListener('change', (event) => {
+
+    var sheet_data = XLSX.utils.sheet_to_json(work_book.Sheets[sheet_name[sheet_select.value]], {header:1});
+
+	if(sheet_data.length > 0)
+	{
+		var table_output = '<table class="table table-striped table-bordered">';
+
+		for(var row = 0; row < sheet_data.length; row++)
+		{
+
+			table_output += '<tr>';
+
+			for(var cell = 0; cell < sheet_data[row].length; cell++)
+			{
+
+				if(row == 0)
+				{
+
+					table_output += '<th>'+sheet_data[row][cell]+'</th>';
+
+				}
+				else
+				{
+
+					table_output += '<td>'+sheet_data[row][cell]+'</td>';
+
+				}
+
+			}
+
+			table_output += '</tr>';
+
+		}
+
+		table_output += '</table>';
+
+		document.getElementById('excel_data').innerHTML = table_output;
+    }
+
+});
+
+function fromFlutter( excelData ) {
+
+	data = new Uint8Array( excelData );
+
+	work_book = XLSX.read(data, {type:'array'});
+
+	sheet_name = work_book.SheetNames;
+
+	if ( sheet_name.length > 0)
+    {
+        var select_output = '';
+
+        for ( var sheet_number = 0; sheet_number < sheet_name.length; sheet_number++ ) {
+
+            select_output += '<option value="' + sheet_number + '">' + sheet_name[sheet_number] + '</option>';
+        }
+        document.getElementById('sheet_select').innerHTML = select_output;
+
+    }
+
+	var sheet_data = XLSX.utils.sheet_to_json(work_book.Sheets[sheet_name[0]], {header:1});
+
+	if(sheet_data.length > 0)
+	{
+		var table_output = '<table class="table table-striped table-bordered">';
+
+		for(var row = 0; row < sheet_data.length; row++)
+		{
+
+			table_output += '<tr>';
+
+			for(var cell = 0; cell < sheet_data[row].length; cell++)
+			{
+
+				if(row == 0)
+				{
+
+					table_output += '<th>'+sheet_data[row][cell]+'</th>';
+
+				}
+				else
+				{
+
+					table_output += '<td>'+sheet_data[row][cell]+'</td>';
+
+				}
+
+			}
+
+			table_output += '</tr>';
+
+		}
+
+		table_output += '</table>';
+
+		document.getElementById('excel_data').innerHTML = table_output;
+    }
+
+}
+
+</script>
