@@ -128,7 +128,7 @@ class _MyDocumentsListPageState extends State<MyDocumentsListPage> {
             labelBackgroundColor: Colors.blue[100],
             label: L10n.S.of(context).Import + L10n.S.of(context).Document,
             child: Icon( Icons.file_copy ),
-            onTap: () => pickAndImportDocuments( ),
+            onTap: pickAndImportDocuments,
           ),
           SpeedDialChild(
             backgroundColor: Theme.of(context).primaryColorDark,
@@ -137,15 +137,7 @@ class _MyDocumentsListPageState extends State<MyDocumentsListPage> {
             labelBackgroundColor: Colors.blue[100],
             label: L10n.S.of(context).Created + L10n.S.of(context).Document ,
             child: Icon( Icons.edit ),
-            onTap: (){
-              String notepadName = formatDate( DateTime.now(), [yyyy,'-',mm,'-',dd,' ',HH,':',nn,':',ss]) + '.pad';
-              var _file = File( Path.join( documentFolderPath, notepadName));
-              if ( !_file.existsSync() ) _file.createSync();
-              Get.to( EditNotepadPage( curNotepadFile: _file ) )?.then((value) {
-                controller.listVaultDirectories( documentFolderPath, widget.docBox );
-                controller.update(['Page']);
-              });
-            }
+            onTap: _createNewNotepad,
           ),
         ],
       );
@@ -244,6 +236,21 @@ class _MyDocumentsListPageState extends State<MyDocumentsListPage> {
         )
       )),
     ];
+  }
+
+  void _createNewNotepad( ) {
+    String notepadRealName = formatDate( DateTime.now(), [yyyy,'-',mm,'-',dd,' ',HH,':',nn,':',ss]) + '.pad';
+    String notepadName = intListToHexString( sha1.convert( utf8.encode( notepadRealName ) ).bytes, false );
+    Directory( Path.join( documentFolderPath, notepadName)).createSync( recursive: true );
+    var _file = File( Path.join( documentFolderPath, notepadName, notepadRealName ) );
+    if ( !_file.existsSync() ) _file.createSync();
+    Get.to( EditNotepadPage( curNotepadFile: _file ) )?.then(( value ) {
+      ImageFileInfo _fileInfo = ImageFileInfo(notepadRealName, documentFolderPath, _file.lastModifiedSync(), _file.lastModifiedSync(), 0, 0, _file.lengthSync(), 0, 0 );
+      widget.docBox.put( notepadName, _fileInfo ).then((_) {
+        controller.listVaultDirectories( documentFolderPath, widget.docBox );
+        controller.update(['Page']);
+      });
+    });
   }
 
   void pickAndImportDocuments( ) {
